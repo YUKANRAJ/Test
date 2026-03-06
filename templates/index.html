@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pickle Shop Billing</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🥒 Pickle Shop Billing</h1>
+      <p>Fast billing for daily shop use</p>
+    </header>
+
+    <section class="panel">
+      <h2>Products</h2>
+      <div class="row wrap">
+        <input id="searchInput" placeholder="Search product..." />
+        <input id="barcodeInput" placeholder="Barcode (optional)" />
+        <button onclick="loadProducts()">Search</button>
+      </div>
+
+      <form id="productForm" class="row wrap">
+        <input type="hidden" id="productId" />
+        <input id="productName" placeholder="Product name" required />
+        <select id="unitType">
+          <option value="kg">Per KG</option>
+          <option value="bottle">Per Bottle</option>
+        </select>
+        <input id="productPrice" type="number" step="0.01" min="0" placeholder="Price" required />
+        <input id="productBarcode" placeholder="Barcode" />
+        <button type="submit">Save</button>
+        <button type="button" class="muted" onclick="resetProductForm()">Clear</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Unit</th><th>Price</th><th>Barcode</th><th>Action</th></tr>
+        </thead>
+        <tbody id="productTable"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Create Bill</h2>
+      <div class="row wrap">
+        <select id="billProduct"></select>
+        <input id="billQty" type="number" step="0.01" min="0.01" placeholder="Quantity" />
+        <button onclick="addToBill()">Add Item</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Product</th><th>Qty</th><th>Rate</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody id="billItems"></tbody>
+      </table>
+
+      <div class="row wrap totals">
+        <label>GST % <input id="taxPercent" type="number" min="0" step="0.01" value="0" onchange="refreshBill()"></label>
+        <strong>Subtotal: ₹<span id="subtotal">0.00</span></strong>
+        <strong>Tax: ₹<span id="tax">0.00</span></strong>
+        <strong>Total: ₹<span id="total">0.00</span></strong>
+      </div>
+      <div class="row">
+        <button onclick="saveBill()">Generate Final Bill</button>
+        <button class="muted" onclick="window.print()">Print / Save PDF</button>
+      </div>
+      <div id="billMessage"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Recent Sales</h2>
+      <div class="row">
+        <button onclick="loadHistory()">Refresh History</button>
+        <button onclick="loadDailyReport()">Daily Report</button>
+        <a class="button" href="/api/sales/export">Export CSV (Excel)</a>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>Date</th><th>Subtotal</th><th>Tax</th><th>Total</th></tr></thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+      <h3>Daily Sales</h3>
+      <table>
+        <thead><tr><th>Date</th><th>Bills</th><th>Total Sales</th></tr></thead>
+        <tbody id="dailyTable"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
