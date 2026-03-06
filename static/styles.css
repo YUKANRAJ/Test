@@ -1,0 +1,74 @@
+:root {
+  --bg: #f5f7f6;
+  --panel: #ffffff;
+  --line: #dce3df;
+  --text: #1f2a24;
+  --accent: #287a3f;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 16px auto;
+  padding: 0 12px 24px;
+}
+
+header { text-align: center; margin-bottom: 12px; }
+h1 { margin: 0; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.row { display: flex; gap: 8px; margin: 8px 0; align-items: center; }
+.wrap { flex-wrap: wrap; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 8px;
+  text-align: left;
+}
+
+input, select, button, .button {
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button, .button {
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button.muted { background: #6b7f71; }
+
+td .danger { background: #b73e3e; }
+
+.totals { justify-content: flex-end; gap: 14px; }
+
+#billMessage { font-weight: bold; margin-top: 8px; }
+
+@media print {
+  button, .button, input, select, #searchInput, #barcodeInput, #productForm {
+    display: none !important;
+  }
+  .panel { border: none; }
+}
